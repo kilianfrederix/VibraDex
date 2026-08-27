@@ -19,8 +19,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Vibranic Central",
-  description: "Centralized monitoring hub for all your applications",
+  title: "Vibradex",
+  description: "Vibradex — diagnostics & monitoring hub for the Vibranic suite.",
 };
 
 export default function RootLayout({

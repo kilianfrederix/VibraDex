@@ -1,7 +1,7 @@
 /**
- * Vibranic Central SDK
- * 
- * Use this in your external apps to send diagnostic data to Vibranic Central
+ * Vibradex SDK
+ *
+ * Use this in your external apps to send diagnostic data to Vibradex
  * 
  * @example
  * ```typescript
