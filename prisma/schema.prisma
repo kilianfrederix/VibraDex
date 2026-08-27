@@ -120,6 +120,15 @@ model AlertHistory {
   message     String
   resolved    Boolean  @default(false)
   resolvedAt  DateTime?
-  
+
   @@index([alertId, triggeredAt])
+}
+
+// A browser/device Web Push subscription (for phone notifications).
+model PushSubscription {
+  id        String   @id @default(cuid())
+  endpoint  String   @unique
+  p256dh    String
+  auth      String
+  createdAt DateTime @default(now())
 }

@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { subscribeToPush, registerServiceWorker } from "@/lib/push-client"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -100,13 +101,17 @@ export default function AlertsPage() {
       setNotifPermission("unsupported")
     } else {
       setNotifPermission(Notification.permission)
+      // Ensure the service worker is registered so push can arrive even if
+      // permission was granted on a previous visit.
+      void registerServiceWorker()
     }
   }, [])
 
   const requestNotifPermission = async () => {
     if (!("Notification" in window)) return
-    const result = await Notification.requestPermission()
-    setNotifPermission(result)
+    // Requests permission, subscribes to Web Push, and stores the subscription.
+    await subscribeToPush()
+    setNotifPermission(Notification.permission)
   }
 
   const fireNotification = (entry: HistoryEntry) => {
