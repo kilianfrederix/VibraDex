@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
-import { sendTelegram } from '@/lib/telegram'
+import { sendPush } from '@/lib/push'
 
 // Does an incoming event satisfy an alert's condition?
 function alertMatches(
@@ -99,7 +99,12 @@ export async function POST(request: NextRequest) {
                 },
             })
 
-            await sendTelegram(`Alert: ${alert.name}\nApp: ${app.name} (${severity})\n${message}`)
+            await sendPush({
+                title: `Alert: ${alert.name}`,
+                body: `${app.name}: ${message}`,
+                url: '/alerts',
+                tag: alert.id,
+            })
         }
 
         return NextResponse.json({
