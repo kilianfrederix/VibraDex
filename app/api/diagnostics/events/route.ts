@@ -1,5 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { sendTelegram } from '@/lib/telegram'
+
+// Does an incoming event satisfy an alert's condition?
+function alertMatches(
+    alert: { condition: string; keyword: string | null },
+    event: { type: string; severity: string; message: string },
+): boolean {
+    switch (alert.condition) {
+        case 'high_severity':
+        case 'app_down':
+            return event.severity === 'high'
+        case 'any_error':
+            return event.type === 'error'
+        case 'message_contains':
+            return !!alert.keyword && event.message.toLowerCase().includes(alert.keyword.toLowerCase())
+        default:
+            return false
+    }
+}
 
 // POST /api/diagnostics/events
 export async function POST(request: NextRequest) {
@@ -62,27 +81,25 @@ export async function POST(request: NextRequest) {
             }
         })
         
-        // Check and trigger alerts for high-severity events
-        if (severity === 'high') {
-            const alerts = await prisma.alert.findMany({
-                where: {
-                    enabled: true,
-                    OR: [
-                        { appId: app.id },
-                        { appId: null },
-                    ],
-                    condition: { in: ['high_severity', 'any_error'] },
+        // Evaluate every enabled alert (for this app or global) against the event.
+        const alerts = await prisma.alert.findMany({
+            where: {
+                enabled: true,
+                OR: [{ appId: app.id }, { appId: null }],
+            },
+        })
+
+        for (const alert of alerts) {
+            if (!alertMatches(alert, { type, severity, message })) continue
+
+            await prisma.alertHistory.create({
+                data: {
+                    alertId: alert.id,
+                    message: `${app.name}: ${message}`,
                 },
             })
-            
-            for (const alert of alerts) {
-                await prisma.alertHistory.create({
-                    data: {
-                        alertId: alert.id,
-                        message: `High severity event: ${message}`,
-                    }
-                })
-            }
+
+            await sendTelegram(`🔔 Alert: ${alert.name}\nApp: ${app.name} (${severity})\n${message}`)
         }
 
         return NextResponse.json({

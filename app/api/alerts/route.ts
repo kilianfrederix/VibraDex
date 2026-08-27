@@ -20,21 +20,29 @@ export async function GET() {
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json()
-        const { name, appId, condition, severity } = body
-        
+        const { name, appId, condition, severity, keyword } = body
+
         if (!name || !condition || !severity) {
             return NextResponse.json(
                 { error: 'Name, condition, and severity are required' },
                 { status: 400 }
             )
         }
-        
+
+        if (condition === 'message_contains' && !keyword?.trim()) {
+            return NextResponse.json(
+                { error: 'A keyword is required for the "message contains" condition' },
+                { status: 400 }
+            )
+        }
+
         const alert = await prisma.alert.create({
             data: {
                 name,
                 appId: appId || null,
                 condition,
                 severity,
+                keyword: condition === 'message_contains' ? keyword.trim() : null,
             },
             include: {
                 app: { select: { name: true } },

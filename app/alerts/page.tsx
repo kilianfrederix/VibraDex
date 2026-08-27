@@ -27,6 +27,7 @@ interface Alert {
   appId: string | null
   condition: string
   severity: string
+  keyword: string | null
   enabled: boolean
   app: { name: string } | null
 }
@@ -53,6 +54,7 @@ interface HistoryEntry {
 const conditionLabels: Record<string, string> = {
   high_severity: "High severity event occurs",
   any_error: "Any error event occurs",
+  message_contains: "Message contains",
   app_down: "App goes down",
   metric_threshold: "Metric exceeds threshold",
 }
@@ -86,6 +88,7 @@ export default function AlertsPage() {
     appId: "all",
     condition: "high_severity",
     severity: "high",
+    keyword: "",
   })
 
   // Track latest seen history entry to detect new ones for notifications
@@ -212,11 +215,12 @@ export default function AlertsPage() {
           appId: newAlert.appId === "all" ? null : newAlert.appId,
           condition: newAlert.condition,
           severity: newAlert.severity,
+          keyword: newAlert.keyword,
         }),
       })
       if (response.ok) {
         setIsDialogOpen(false)
-        setNewAlert({ name: "", appId: "all", condition: "high_severity", severity: "high" })
+        setNewAlert({ name: "", appId: "all", condition: "high_severity", severity: "high", keyword: "" })
         void fetchAlerts()
       }
     } catch (error) {
@@ -362,11 +366,25 @@ export default function AlertsPage() {
                     <SelectContent>
                       <SelectItem value="high_severity">High severity event</SelectItem>
                       <SelectItem value="any_error">Any error event</SelectItem>
+                      <SelectItem value="message_contains">Event message contains…</SelectItem>
                       <SelectItem value="app_down">App goes down</SelectItem>
                       <SelectItem value="metric_threshold">Metric threshold</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
+                {newAlert.condition === "message_contains" && (
+                  <div>
+                    <label className="text-sm font-medium">Keyword</label>
+                    <Input
+                      value={newAlert.keyword}
+                      onChange={(e) => setNewAlert({ ...newAlert, keyword: e.target.value })}
+                      placeholder='e.g. "deleted"'
+                    />
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Fires when an event message contains this text (case-insensitive).
+                    </p>
+                  </div>
+                )}
                 <div>
                   <label className="text-sm font-medium">Alert Severity</label>
                   <Select
@@ -419,6 +437,7 @@ export default function AlertsPage() {
                       <CardTitle className="text-base">{alert.name}</CardTitle>
                       <p className="text-sm text-muted-foreground">
                         {alert.app ? alert.app.name : "All apps"} — {conditionLabels[alert.condition] || alert.condition}
+                        {alert.condition === "message_contains" && alert.keyword ? ` "${alert.keyword}"` : ""}
                       </p>
                     </div>
                   </div>
