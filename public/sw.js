@@ -11,8 +11,6 @@ self.addEventListener("push", (event) => {
   const title = data.title || "Vibradex";
   const options = {
     body: data.body || "",
-    icon: data.icon || "/icon-192.png",
-    badge: "/icon-192.png",
     tag: data.tag,
     data: { url: data.url || "/alerts" },
   };
