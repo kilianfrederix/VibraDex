@@ -99,7 +99,7 @@ export async function POST(request: NextRequest) {
                 },
             })
 
-            await sendTelegram(`🔔 Alert: ${alert.name}\nApp: ${app.name} (${severity})\n${message}`)
+            await sendTelegram(`Alert: ${alert.name}\nApp: ${app.name} (${severity})\n${message}`)
         }
 
         return NextResponse.json({
