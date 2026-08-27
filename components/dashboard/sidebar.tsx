@@ -21,7 +21,7 @@ export function Sidebar() {
         <aside className="w-64 border-r bg-background flex flex-col">
             <div className="h-14 px-4 flex items-center border-b">
                 <span className="font-semibold tracking-tight text-lg">
-                    Vibranic Central
+                    Vibradex
                 </span>
             </div>
 

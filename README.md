@@ -1,26 +1,26 @@
-# Vibranic Central
+# Vibradex
 
 > One dashboard to monitor every app you build — real-time events, alerts and status, all in one place.
 
-**Live:** https://vibranic-central.com
+**Live:** https://vibradex.kilianfrederix.net
 
-![Vibranic Central dashboard](docs/dashboard.png)
+![Vibradex dashboard](docs/dashboard.png)
 
 ---
 
 ## About
 
-Vibranic Central is a personal **diagnostics & monitoring hub**. Apps connect through the **Vibranic SDK** and stream their events, errors and metrics to one always-on dashboard — so instead of checking every project separately, you see the health of your whole suite at a glance.
+Vibradex is a personal **diagnostics & monitoring hub**. Apps connect through the **Vibradex SDK** and stream their events, errors and metrics to one always-on dashboard — so instead of checking every project separately, you see the health of your whole suite at a glance.
 
-It's the backbone of the Vibranic app suite: every app I build reports into Central.
+It's the backbone of the Vibranic app suite: every app I build reports into Vibradex.
 
 ---
 
 ## Features
 
-- **Unified event timeline** — see events, errors and warnings over time from every linked app, streamed in via the Vibranic SDK.
+- **Unified event timeline** — see events, errors and warnings over time from every linked app, streamed in via the Vibradex SDK.
 - **Per-app alerts** — set alerts on specific apps and get notified the moment one fails.
-- **API key management** — generate API keys to connect new apps to Central in seconds.
+- **API key management** — generate API keys to connect new apps to Vibradex in seconds.
 - **Built-in Pomodoro** — manage your focus and breaks without leaving the dashboard.
 - **Polished UX** — light/dark theme, global search across apps & events, responsive layout.
 
@@ -36,15 +36,15 @@ It's the backbone of the Vibranic app suite: every app I build reports into Cent
 | Database | PostgreSQL (Neon) |
 | ORM | Prisma 6 |
 | Auth | OpenID Connect (Passport + sessions) |
-| Hosting | Deployed at vibranic-central.com |
+| Hosting | Vercel — vibradex.kilianfrederix.net |
 
 ---
 
 ## How it works
 
-1. **Register an app** in Central and generate an API key.
-2. **Add the Vibranic SDK** to that app and drop in the key.
-3. The app **streams events** (info / warnings / errors) to Central.
+1. **Register an app** in Vibradex and generate an API key.
+2. **Add the Vibradex SDK** to that app and drop in the key.
+3. The app **streams events** (info / warnings / errors) to Vibradex.
 4. **Watch them live** on the dashboard and set alerts on the apps that matter.
 
 ---
@@ -53,8 +53,8 @@ It's the backbone of the Vibranic app suite: every app I build reports into Cent
 
 ```bash
 # 1. Clone
-git clone https://github.com/kilianfrederix/vibranic-central.git
-cd vibranic-central
+git clone https://github.com/kilianfrederix/vibradex.git
+cd vibradex
 
 # 2. Install
 npm install
@@ -81,8 +81,7 @@ App runs at `http://localhost:3000`.
 
 ## Roadmap
 
-- [ ] Migrate authentication to Clerk and deploy on Vercel
-- [ ] Deeper **vibranic-orbit** integration (the productivity app in the suite)
+- [ ] Deeper **VibraFlow** integration (the planner app in the suite)
 - [ ] More alert channels (email / webhook)
 
 ---
@@ -90,4 +89,4 @@ App runs at `http://localhost:3000`.
 ## Author
 
 **Kilian Frederix** — full-stack web developer, design-driven.
-[vibranic-central.com](https://vibranic-central.com) · [LinkedIn](https://www.linkedin.com/in/kilian-frederix/)
+[vibradex.kilianfrederix.net](https://vibradex.kilianfrederix.net) · [LinkedIn](https://www.linkedin.com/in/kilian-frederix/)

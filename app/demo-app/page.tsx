@@ -9,7 +9,7 @@ import { AlertCircle, CheckCircle2, TrendingUp } from 'lucide-react'
 
 // Initialize the SDK
 const vibranic = new VibranicClient({
-    hubUrl: 'http://localhost:3000', // Your Vibranic Central URL
+    hubUrl: 'http://localhost:3000', // Your Vibradex URL
     apiKey: 'vib_354a736c162143feafc88e84c059574f', // Replace with actual API key from DB
     batchSize: 5,
     flushInterval: 3000
@@ -84,7 +84,7 @@ export default function DemoApp() {
                 <div className="text-center space-y-2">
                     <h1 className="text-4xl font-bold">Vibranic Demo App</h1>
                     <p className="text-muted-foreground">
-                        This app sends diagnostic data to Vibranic Central
+                        This app sends diagnostic data to Vibradex
                     </p>
                 </div>
 
@@ -165,7 +165,7 @@ export default function DemoApp() {
                     <CardHeader>
                         <CardTitle>Test Diagnostic Events</CardTitle>
                         <CardDescription>
-                            Send various types of events to Vibranic Central
+                            Send various types of events to Vibradex
                         </CardDescription>
                     </CardHeader>
                     <CardContent className="grid md:grid-cols-3 gap-4">
@@ -202,9 +202,9 @@ export default function DemoApp() {
                         <CardTitle>How It Works</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-2 text-sm">
-                        <p>✅ Every action in this app sends data to Vibranic Central</p>
+                        <p>✅ Every action in this app sends data to Vibradex</p>
                         <p>✅ Events are batched and sent automatically every 3 seconds</p>
-                        <p>✅ Open Vibranic Central to see the events appear in real-time</p>
+                        <p>✅ Open Vibradex to see the events appear in real-time</p>
                         <p>✅ Check the "Demo App" page in the hub to view all diagnostics</p>
                     </CardContent>
                 </Card>
